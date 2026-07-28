@@ -3,28 +3,28 @@ import Base from '../layouts/Base.astro';
 
 const media = [
   {
-    kanji: '声',
+    idx: '01',
     title: 'Подкаст «Путь Человеческий»',
     text: 'Разговоры о жизни, бизнесе и внутреннем пути. 15+ выпусков как ведущий.',
     link: 'https://www.youtube.com/@путь-человеческий',
     linkLabel: 'Смотреть на YouTube →',
   },
   {
-    kanji: '本',
+    idx: '02',
     title: 'Книги',
     text: 'Мои книги и тексты. Ссылки и описания добавим.',
     link: '',
     linkLabel: '',
   },
   {
-    kanji: '遊',
+    idx: '03',
     title: 'Настольная игра',
     text: 'Авторская настольная игра. Описание и материалы добавим.',
     link: '',
     linkLabel: '',
   },
   {
-    kanji: '誌',
+    idx: '04',
     title: 'СМИ-журнал «Конвейер»',
     text: 'Издавал журнал «Конвейер»: есть видео на YouTube и электронная версия.',
     link: '',
@@ -36,9 +36,8 @@ const media = [
 <Base title="Медиа — Никита Смирнов" description="Подкаст, книги, настольная игра и прошлые проекты Никиты Смирнова.">
   <section>
     <div class="container">
-      <p class="eyebrow" data-reveal>作 · MEDIA</p>
-      <div class="section-head" data-reveal style="margin-top:18px">
-        <span class="kanji jp">創作</span>
+      <p class="eyebrow" data-reveal>MEDIA · ТВОРЧЕСТВО</p>
+      <div class="section-head" data-reveal style="margin-top:20px">
         <h2>Что сделал</h2>
       </div>
       <p class="prose" data-reveal style="margin-bottom:38px; color:var(--text-2)">
@@ -49,7 +48,7 @@ const media = [
       <div class="media-grid" data-reveal>
         {media.map((m) => (
           <div class="media-item">
-            <span class="kanji jp">{m.kanji}</span>
+            <span class="idx mono">{m.idx}</span>
             <h3>{m.title}</h3>
             <p>{m.text}</p>
             {m.link ? (

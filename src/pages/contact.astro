@@ -5,7 +5,7 @@ import Base from '../layouts/Base.astro';
 <Base title="Контакт — Никита Смирнов" description="Связаться с Никитой Смирновым в Telegram.">
   <section>
     <div class="container">
-      <p class="eyebrow" data-reveal>縁 · CONTACT</p>
+      <p class="eyebrow" data-reveal>CONTACT · СВЯЗЬ</p>
       <div class="contact-wrap" data-reveal>
         <h2 class="contact-title">Напиши мне</h2>
         <p class="contact-sub">
@@ -16,7 +16,6 @@ import Base from '../layouts/Base.astro';
           @ndsmirnov в Telegram →
         </a>
       </div>
-      <span class="contact-kanji jp" aria-hidden="true">縁</span>
     </div>
   </section>
 </Base>
@@ -26,9 +25,4 @@ import Base from '../layouts/Base.astro';
   .contact-wrap { max-width: 620px; position: relative; z-index: 1; }
   .contact-title { font-size: clamp(2.2rem, 6vw, 3.6rem); margin: 18px 0 18px; }
   .contact-sub { font-size: 1.15rem; color: var(--text-2); margin-bottom: 30px; max-width: 46ch; }
-  .contact-kanji {
-    position: absolute; right: -2vw; bottom: -8vh;
-    font-size: 42vh; color: var(--violet); opacity: 0.05;
-    pointer-events: none; user-select: none;
-  }
 </style>

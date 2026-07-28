@@ -14,16 +14,15 @@ const timeline = [
 <Base title="Обо мне — Никита Смирнов" description="Путь Никиты Смирнова с 2022 года, история и философия.">
   <section>
     <div class="container">
-      <p class="eyebrow" data-reveal>自己紹介 · ABOUT</p>
+      <p class="eyebrow" data-reveal>ABOUT · О СЕБЕ</p>
 
       <!-- КТО Я -->
-      <div class="about-intro" data-reveal>
+      <div class="about-intro" data-reveal style="margin-top:22px">
         <div class="photo-slot">
           <span>ФОТО<br />загрузишь отдельно</span>
         </div>
         <div>
           <div class="section-head" style="margin-bottom:24px">
-            <span class="kanji jp">道</span>
             <h2>Кто я</h2>
           </div>
           <div class="prose">
@@ -47,7 +46,7 @@ const timeline = [
   <section data-reveal>
     <div class="container">
       <div class="section-head">
-        <span class="kanji jp">歩み</span>
+        <span class="eyebrow">TIMELINE · 2022 → 2026</span>
         <h2>Путь</h2>
       </div>
       <div class="timeline" style="max-width:720px">
@@ -66,7 +65,7 @@ const timeline = [
   <section data-reveal>
     <div class="container">
       <div class="section-head">
-        <span class="kanji jp">物語</span>
+        <span class="eyebrow">STORY · ПУТЬ</span>
         <h2>Моя история</h2>
       </div>
       <div class="prose">
@@ -85,22 +84,22 @@ const timeline = [
   <section data-reveal>
     <div class="container">
       <div class="section-head">
-        <span class="kanji jp">哲学</span>
+        <span class="eyebrow">PHILOSOPHY · ВЗГЛЯД</span>
         <h2>Философия</h2>
       </div>
       <div class="values-grid">
         <div class="value">
-          <span class="jp">創</span>
+          <span class="idx mono">01</span>
           <h3>Принципы</h3>
           <p>Технология — это ремесло, которому можно научиться. Система побеждает хаос. Делать меньше, но точнее.</p>
         </div>
         <div class="value">
-          <span class="jp">誠</span>
+          <span class="idx mono">02</span>
           <h3>Ценности</h3>
           <p>Честность и естественность. Постоянное развитие. Внутреннее состояние определяет результат снаружи.</p>
         </div>
         <div class="value">
-          <span class="jp">道</span>
+          <span class="idx mono">03</span>
           <h3>Позиция</h3>
           <p>Строю в открытую и запускаю регулярно. Инструмент имеет ценность, только когда им реально пользуются.</p>
         </div>
@@ -120,8 +119,8 @@ const timeline = [
     background: linear-gradient(180deg, var(--bg-card), var(--bg-2));
     transition: all 0.3s var(--ease);
   }
-  .value:hover { border-color: var(--violet-dim); box-shadow: 0 0 40px -24px var(--glow); }
-  .value .jp { font-family: var(--font-jp); font-size: 1.8rem; color: var(--violet); opacity: 0.55; }
+  .value:hover { border-color: var(--violet); box-shadow: 0 0 40px -24px var(--glow); }
+  .value .idx { color: var(--cyan); font-size: 0.85rem; letter-spacing: 0.1em; }
   .value h3 { font-size: 1.3rem; margin: 10px 0 8px; }
   .value p { color: var(--text-2); font-size: 0.95rem; }
 
