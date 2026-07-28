@@ -1,0 +1,132 @@
+---
+import Base from '../layouts/Base.astro';
+
+// Таймлайн — черновик на утверждение. Уточним/дополним из профиля и дневников.
+const timeline = [
+  { year: '2022', title: 'Вход в AI', text: 'Начал применять нейросети в работе — с первых экспериментов до реальных запусков.' },
+  { year: '2023', title: 'Маркетинг запусков', text: 'Онлайн-школы, воронки, ИИ-агенты в продажах и поддержке. Ниши: от журналистики до эзотерики.' },
+  { year: '2024', title: 'Системный подход', text: 'Личная система жизни и работы: протоколы, автоматизация рутины, данные под контролем.' },
+  { year: '2025', title: 'Personal AI OS', text: 'Собрал персональную операционную систему на AI — здоровье, финансы, рефлексия, знания в одном контуре.' },
+  { year: '2026', title: 'Продукты и витрина', text: 'NutriVoice и другие боты в проде. Челлендж «проект в неделю» — этот сайт.' },
+];
+---
+
+<Base title="Обо мне — Никита Смирнов" description="Путь Никиты Смирнова с 2022 года, история и философия.">
+  <section>
+    <div class="container">
+      <p class="eyebrow" data-reveal>自己紹介 · ABOUT</p>
+
+      <!-- КТО Я -->
+      <div class="about-intro" data-reveal>
+        <div class="photo-slot">
+          <span>ФОТО<br />загрузишь отдельно</span>
+        </div>
+        <div>
+          <div class="section-head" style="margin-bottom:24px">
+            <span class="kanji jp">道</span>
+            <h2>Кто я</h2>
+          </div>
+          <div class="prose">
+            <p>
+              Меня зовут <strong>Никита Смирнов</strong>. Я строю AI-инструменты:
+              голосовых ассистентов, Telegram-ботов и автоматизации, которые снимают
+              рутину и возвращают людям время.
+            </p>
+            <p>
+              С 2022 года — в применении нейросетей на практике: от маркетинга запусков
+              и ИИ-агентов в продажах до собственной операционной системы жизни на AI.
+              Сейчас запускаю по одному рабочему продукту каждую неделю.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ТАЙМЛАЙН -->
+  <section data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <span class="kanji jp">歩み</span>
+        <h2>Путь</h2>
+      </div>
+      <div class="timeline" style="max-width:720px">
+        {timeline.map((t) => (
+          <div class="tl-item">
+            <div class="tl-year mono">{t.year}</div>
+            <h4>{t.title}</h4>
+            <p>{t.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ИСТОРИЯ -->
+  <section data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <span class="kanji jp">物語</span>
+        <h2>Моя история</h2>
+      </div>
+      <div class="prose">
+        <p>
+          <em>Черновик — соберём финальную версию из твоего профиля и дневников.</em>
+        </p>
+        <p>
+          Здесь будет живой нарратив: с чего начался путь, через что прошёл,
+          как пришёл к AI и к системному взгляду на жизнь и работу.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ФИЛОСОФИЯ -->
+  <section data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <span class="kanji jp">哲学</span>
+        <h2>Философия</h2>
+      </div>
+      <div class="values-grid">
+        <div class="value">
+          <span class="jp">創</span>
+          <h3>Принципы</h3>
+          <p>Технология — это ремесло, которому можно научиться. Система побеждает хаос. Делать меньше, но точнее.</p>
+        </div>
+        <div class="value">
+          <span class="jp">誠</span>
+          <h3>Ценности</h3>
+          <p>Честность и естественность. Постоянное развитие. Внутреннее состояние определяет результат снаружи.</p>
+        </div>
+        <div class="value">
+          <span class="jp">道</span>
+          <h3>Позиция</h3>
+          <p>Строю в открытую и запускаю регулярно. Инструмент имеет ценность, только когда им реально пользуются.</p>
+        </div>
+      </div>
+      <p class="mono" style="color:var(--text-dim); margin-top:26px">
+        * Тексты философии — черновик, уточним из дневников.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .about-intro { display: grid; grid-template-columns: 300px 1fr; gap: 48px; align-items: start; }
+  .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+  .value {
+    border: 1px solid var(--line); border-radius: var(--radius); padding: 28px;
+    background: linear-gradient(180deg, var(--bg-card), var(--bg-2));
+    transition: all 0.3s var(--ease);
+  }
+  .value:hover { border-color: var(--violet-dim); box-shadow: 0 0 40px -24px var(--glow); }
+  .value .jp { font-family: var(--font-jp); font-size: 1.8rem; color: var(--violet); opacity: 0.55; }
+  .value h3 { font-size: 1.3rem; margin: 10px 0 8px; }
+  .value p { color: var(--text-2); font-size: 0.95rem; }
+
+  @media (max-width: 760px) {
+    .about-intro { grid-template-columns: 1fr; gap: 28px; }
+    .photo-slot { max-width: 280px; }
+  }
+</style>

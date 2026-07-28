@@ -1,0 +1,71 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+// собираем уникальные теги для фильтров
+const allTags = [...new Set(projects.flatMap((p) => p.data.tags))].sort();
+---
+
+<Base title="Проекты — Никита Смирнов" description="Витрина проектов: боты, автоматизации и инструменты. Новый деплой каждую неделю.">
+  <section>
+    <div class="container">
+      <p class="eyebrow" data-reveal>作品 · WORKS</p>
+      <div class="section-head" data-reveal style="margin-top:18px">
+        <span class="kanji jp">実験室</span>
+        <h2>Проекты</h2>
+      </div>
+      <p class="prose" data-reveal style="margin-bottom:34px; color:var(--text-2)">
+        Каждую неделю — новый рабочий инструмент. Заходи, пробуй, забирай себе.
+        Фильтруй по типу.
+      </p>
+
+      {allTags.length > 0 && (
+        <div class="filters" data-reveal>
+          <button class="filter-btn active" data-filter="*">ВСЕ</button>
+          {allTags.map((t) => (
+            <button class="filter-btn" data-filter={t}>{t.toUpperCase()}</button>
+          ))}
+        </div>
+      )}
+
+      {projects.length > 0 ? (
+        <div class="grid" data-grid>
+          {projects.map((p) => (
+            <ProjectCard
+              slug={p.id}
+              title={p.data.title}
+              description={p.data.description}
+              tags={p.data.tags}
+              week={p.data.week}
+              cover={p.data.cover}
+            />
+          ))}
+        </div>
+      ) : (
+        <p class="mono" style="color:var(--text-dim)">Проекты скоро появятся.</p>
+      )}
+    </div>
+  </section>
+</Base>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+  const cards = document.querySelectorAll<HTMLElement>('[data-grid] .card');
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      buttons.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      cards.forEach((card) => {
+        const tags = (card.dataset.tags || '').split(' ');
+        const show = f === '*' || tags.includes(f!);
+        card.style.display = show ? '' : 'none';
+      });
+    });
+  });
+</script>

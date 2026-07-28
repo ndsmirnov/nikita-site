@@ -1,0 +1,34 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Контакт — Никита Смирнов" description="Связаться с Никитой Смирновым в Telegram.">
+  <section>
+    <div class="container">
+      <p class="eyebrow" data-reveal>縁 · CONTACT</p>
+      <div class="contact-wrap" data-reveal>
+        <h2 class="contact-title">Напиши мне</h2>
+        <p class="contact-sub">
+          Хочешь обсудить задачу, попробовать проект или просто написать —
+          я в Telegram. Отвечаю лично.
+        </p>
+        <a class="btn btn-primary contact-btn" href="https://t.me/ndsmirnov" target="_blank" rel="noopener">
+          @ndsmirnov в Telegram →
+        </a>
+      </div>
+      <span class="contact-kanji jp" aria-hidden="true">縁</span>
+    </div>
+  </section>
+</Base>
+
+<style>
+  section { min-height: 62vh; display: flex; align-items: center; position: relative; overflow: hidden; }
+  .contact-wrap { max-width: 620px; position: relative; z-index: 1; }
+  .contact-title { font-size: clamp(2.2rem, 6vw, 3.6rem); margin: 18px 0 18px; }
+  .contact-sub { font-size: 1.15rem; color: var(--text-2); margin-bottom: 30px; max-width: 46ch; }
+  .contact-kanji {
+    position: absolute; right: -2vw; bottom: -8vh;
+    font-size: 42vh; color: var(--violet); opacity: 0.05;
+    pointer-events: none; user-select: none;
+  }
+</style>

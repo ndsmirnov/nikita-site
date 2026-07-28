@@ -1,0 +1,152 @@
+---
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const latest = projects.slice(0, 3);
+const total = projects.length;
+---
+
+<Base>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <p class="eyebrow" data-reveal>士道 · AI ENGINEER</p>
+      <h1 class="hero-title" data-reveal>
+        Строю <span class="accent">AI-инструменты</span><br />
+        и запускаю по одному<br />
+        каждую неделю.
+      </h1>
+      <p class="hero-sub" data-reveal>
+        Меня зовут Никита Смирнов. Я собираю голосовых ассистентов, Telegram-ботов
+        и автоматизации, которые снимают рутину и возвращают людям время.
+        Здесь — живая витрина всего, что я строю.
+      </p>
+      <div class="hero-actions" data-reveal>
+        <a class="btn btn-primary" href="/projects">Смотреть проекты →</a>
+        <a class="btn btn-ghost" href="/about">Моя история</a>
+      </div>
+
+      <div class="hero-stats" data-reveal>
+        <div class="stat">
+          <span class="num mono">{String(total).padStart(2, '0')}</span>
+          <span class="lbl mono">проектов в витрине</span>
+        </div>
+        <div class="stat">
+          <span class="num mono">2022</span>
+          <span class="lbl mono">в AI с этого года</span>
+        </div>
+        <div class="stat">
+          <span class="num mono jp">週1</span>
+          <span class="lbl mono">новый деплой в неделю</span>
+        </div>
+      </div>
+    </div>
+    <span class="hero-kanji jp" aria-hidden="true">技</span>
+  </section>
+
+  <!-- ПОСЛЕДНИЕ ПРОЕКТЫ -->
+  <section data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <span class="kanji jp">最新</span>
+        <h2>Последние деплои</h2>
+      </div>
+      {latest.length > 0 ? (
+        <div class="grid">
+          {latest.map((p) => (
+            <ProjectCard
+              slug={p.id}
+              title={p.data.title}
+              description={p.data.description}
+              tags={p.data.tags}
+              week={p.data.week}
+              cover={p.data.cover}
+            />
+          ))}
+        </div>
+      ) : (
+        <p class="mono" style="color:var(--text-dim)">Скоро здесь появятся проекты.</p>
+      )}
+      <div style="margin-top:36px">
+        <a class="btn" href="/projects">Все проекты →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ВХОДЫ В РАЗДЕЛЫ -->
+  <section data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <span class="kanji jp">案内</span>
+        <h2>Куда дальше</h2>
+      </div>
+      <div class="nav-cards">
+        <a class="nav-card" href="/about">
+          <span class="jp">道</span>
+          <h3>Обо мне</h3>
+          <p>Путь с 2022-го, история и философия. Кто я и почему делаю то, что делаю.</p>
+        </a>
+        <a class="nav-card" href="/media">
+          <span class="jp">創</span>
+          <h3>Медиа</h3>
+          <p>Подкаст «Путь Человеческий», книги, настольная игра и прошлые проекты.</p>
+        </a>
+        <a class="nav-card" href="/contact">
+          <span class="jp">縁</span>
+          <h3>Контакт</h3>
+          <p>Связаться напрямую в Telegram. Обсудить задачу или просто написать.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero { padding: 120px 0 96px; position: relative; overflow: hidden; }
+  .hero-title {
+    font-size: clamp(2.4rem, 6.4vw, 4.6rem);
+    margin: 26px 0 26px;
+    max-width: 16ch;
+  }
+  .hero-title .accent {
+    color: var(--violet-bright);
+    text-shadow: 0 0 40px var(--glow);
+  }
+  .hero-sub { max-width: 56ch; color: var(--text-2); font-size: 1.1rem; }
+  .hero-actions { display: flex; gap: 14px; margin-top: 34px; flex-wrap: wrap; }
+
+  .hero-stats { display: flex; gap: 48px; margin-top: 64px; flex-wrap: wrap; }
+  .stat { display: flex; flex-direction: column; gap: 6px; }
+  .stat .num {
+    font-size: 2rem; color: var(--violet-bright); font-weight: 700;
+    line-height: 1;
+  }
+  .stat .lbl { font-size: 0.72rem; letter-spacing: 0.06em; color: var(--text-dim); text-transform: uppercase; }
+
+  .hero-kanji {
+    position: absolute;
+    right: -3vw; top: 50%; transform: translateY(-50%);
+    font-size: 40vh; font-weight: 700;
+    color: var(--violet);
+    opacity: 0.05;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .nav-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  .nav-card {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 30px;
+    background: linear-gradient(180deg, var(--bg-card), var(--bg-2));
+    transition: all 0.35s var(--ease);
+  }
+  .nav-card:hover { border-color: var(--violet-dim); transform: translateY(-4px); box-shadow: 0 24px 60px -34px var(--glow); }
+  .nav-card .jp { font-family: var(--font-jp); font-size: 1.8rem; color: var(--violet); opacity: 0.6; }
+  .nav-card h3 { font-size: 1.4rem; margin: 12px 0 8px; }
+  .nav-card p { color: var(--text-2); font-size: 0.95rem; }
+</style>

@@ -1,0 +1,35 @@
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+  slug: string;
+  title: string;
+  description: string;
+  tags: string[];
+  week?: number;
+  cover?: any;
+}
+
+const { slug, title, description, tags, week, cover } = Astro.props;
+// кандзи-заглушка для обложки без картинки — берём первый символ хэша
+const kanjiPool = ['刃', '零', '道', '技', '匠', '創', '影', '光'];
+const kanji = kanjiPool[slug.length % kanjiPool.length];
+---
+
+<a class="card" href={`/projects/${slug}`} data-tags={tags.join(' ')}>
+  <div class="card-cover">
+    {cover ? (
+      <Image src={cover} alt={title} width={640} height={400} />
+    ) : (
+      <span class="placeholder jp">{kanji}</span>
+    )}
+    {week != null && <span class="card-week">НЕДЕЛЯ {String(week).padStart(2, '0')}</span>}
+  </div>
+  <div class="card-body">
+    <h3>{title}</h3>
+    <p>{description}</p>
+    <div class="card-tags">
+      {tags.map((t) => <span class="tag">{t}</span>)}
+    </div>
+  </div>
+</a>
