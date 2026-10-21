@@ -1,0 +1,357 @@
+---
+import Base from '../layouts/Base.astro';
+import { DICTS, LINKS, TOOLS, FEEDS } from '../data/content';
+import { telegramPosts, youtubeVideos } from '../lib/feeds';
+
+interface Props { lang: 'ru' | 'en' }
+const t = DICTS[Astro.props.lang];
+const [posts, episodes] = await Promise.all([
+  telegramPosts(FEEDS.telegram, 6),
+  youtubeVideos(FEEDS.podcastChannelId, 3),
+]);
+const fmt = (d: string) =>
+  new Date(d).toLocaleDateString(t.dateLocale, { day: 'numeric', month: 'long', year: 'numeric' });
+const ready = TOOLS.filter((x) => x.ready);
+const soon = TOOLS.filter((x) => !x.ready);
+const toolText = t.tools.items as Record<string, { title: string; tag: string; text: string; needs?: string }>;
+const p = t.lang === 'en' ? '/en' : '';
+
+const ICONS: Record<string, { color: string; svg: string }> = {
+  channel: { color: '#1E6E6B', svg: '<path fill="currentColor" d="M21.5 3.6 2.9 10.8c-1.3.5-1.3 1.2-.2 1.6l4.8 1.5 1.8 5.6c.2.6.1.9.8.9.5 0 .7-.2 1-.5l2.3-2.3 4.9 3.6c.9.5 1.5.2 1.8-.8l3.2-15.1c.3-1.3-.5-1.9-1.8-1.3ZM8.3 13.6l10.4-6.6c.5-.3.9-.1.6.2l-8.9 8-.3 3.7-1.8-5.3Z"/>' },
+  bot: { color: '#17803F', svg: '<path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 3v3M5 8h14a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2Z"/><circle cx="9" cy="13" r="1.6" fill="currentColor"/><circle cx="15" cy="13" r="1.6" fill="currentColor"/>' },
+  instagram: { color: '#C2566F', svg: '<rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/>' },
+  podcast: { color: '#A8631A', svg: '<rect x="9" y="2.5" width="6" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7"/>' },
+  youtube: { color: '#B5402F', svg: '<path fill="currentColor" d="M22 8.2a3 3 0 0 0-2.1-2.1C18 5.6 12 5.6 12 5.6s-6 0-7.9.5A3 3 0 0 0 2 8.2 31 31 0 0 0 1.6 12 31 31 0 0 0 2 15.8a3 3 0 0 0 2.1 2.1c1.9.5 7.9.5 7.9.5s6 0 7.9-.5a3 3 0 0 0 2.1-2.1c.4-1.2.4-3.8.4-3.8s0-2.6-.4-3.8ZM10 15.1V8.9l5.2 3.1L10 15.1Z"/>' },
+  github: { color: '#1D1A16', svg: '<path fill="currentColor" d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.4-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.8 1a9.6 9.6 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10 10 0 0 0 12 2Z"/>' },
+};
+---
+<Base t={t}>
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href={`${p}/`} aria-label={t.hero.photoAlt}>
+        <span class="brand-mark">{t.lang === 'ru' ? 'НС' : 'NS'}</span>
+        <span class="brand-name">{t.lang === 'ru' ? 'Никита Смирнов' : 'Nikita Smirnov'}<small>{t.lang === 'ru' ? 'Конторка Никиты' : 'Nikita’s Office'}</small></span>
+      </a>
+      <nav class="nav-links" aria-label="menu">
+        <a href="#tools">{t.nav.tools}</a>
+        <a href="#consult">{t.nav.consult}</a>
+        <a href="#podcast">{t.nav.podcast}</a>
+        <a href="#blog">{t.nav.blog}</a>
+        <a href="#about">{t.nav.about}</a>
+      </nav>
+      <div class="nav-right">
+        <a class="lang" href={t.altPath} hreflang={t.lang === 'ru' ? 'en' : 'ru'}>{t.altLabel}</a>
+        <a class="btn btn-primary btn-sm" href="#contact">{t.nav.cta}</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Первый экран: оффер + два действия -->
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="kicker">{t.hero.kicker}</div>
+          <h1>{t.hero.title[0]}<br />{t.hero.title[1]}<span class="accent">{t.hero.accent}</span></h1>
+          <p class="lead">{t.hero.lead}</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="#contact"><span class="arrow">{t.hero.cta}</span></a>
+            <a class="btn btn-ghost" href="#tools">{t.hero.cta2}</a>
+          </div>
+        </div>
+        <div class="hero-photo">
+          <div class="polaroid">
+            <img class="clip" src="/img/clip.png" alt="" width="200" height="133" />
+            <img src="/img/hero.webp" alt={t.hero.photoAlt} width="900" height="1125" fetchpriority="high" />
+            <div class="cap hand">{t.hero.note}</div>
+          </div>
+          <span class="stamp green">{t.hero.stamp}</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Доказательство: что уже работает -->
+    <div class="proof">
+      <div class="wrap">
+        <div class="proof-box reveal">
+          <div class="proof-label"><span class="dot"></span>{t.proof.label}</div>
+          <div class="proof-grid">
+            {t.proof.items.map((i) => <div><b>{i.t}</b><span>{i.d}</span></div>)}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Услуги и процесс -->
+    <section id="consult" class="alt">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <div class="kicker">{t.services.kicker}</div>
+          <h2>{t.services.title}</h2>
+          <p class="lead">{t.services.lead}</p>
+        </div>
+        <div class="svc-grid">
+          {t.services.groups.map((g) => (
+            <div class={`svc reveal ${g.color}`}>
+              <span class={`tag ${g.color}`}>{g.tag}</span>
+              <h3>{g.title}</h3>
+              <ul>{g.items.map(([a, b]) => <li><b>{a}</b> — {b}</li>)}</ul>
+            </div>
+          ))}
+        </div>
+        <div class="steps reveal">
+          <h3>{t.services.steps.title}</h3>
+          <ol>{t.services.steps.items.map(([a, b]) => <li><b>{a}</b><span>{b}</span></li>)}</ol>
+          <div class="steps-cta">
+            <a class="btn btn-primary" href="#contact"><span class="arrow">{t.services.cta}</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Инструменты -->
+    <section id="tools">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <div class="kicker">{t.tools.kicker}</div>
+          <h2>{t.tools.title}</h2>
+          <p class="lead">{t.tools.lead}</p>
+        </div>
+        <div class="tools-grid">
+          {ready.map((x) => {
+            const d = toolText[x.key];
+            return (
+              <article class="tool reveal">
+                <div class="ph">
+                  <img src={x.img} alt={d.title} loading="lazy" width="1000" height="563" />
+                  <span class="tag">{d.tag}</span>
+                </div>
+                <div class="body">
+                  <h3>{d.title}</h3>
+                  <p>{d.text}</p>
+                  {d.needs && <div class="needs">{d.needs}</div>}
+                  <div class="acts">
+                    <a class="btn btn-green btn-sm" href={`${LINKS.bot}?start=${x.key}`} target="_blank" rel="noopener"><span class="arrow">{t.tools.get}</span></a>
+                    {x.repo && <a class="btn btn-ghost btn-sm" href={x.repo} target="_blank" rel="noopener">{t.tools.code}</a>}
+                  </div>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+        <div class="soon-row">
+          {soon.map((x) => {
+            const d = toolText[x.key];
+            return (
+              <div class="soon reveal">
+                <span class="tag muted">{t.tools.soon}</span>
+                <div><h3>{d.title}</h3><p>{d.text} {t.tools.soonNote}</p></div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+
+    <!-- Кейсы -->
+    <section class="alt">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <div class="kicker">{t.cases.kicker}</div>
+          <h2>{t.cases.title}</h2>
+          <p class="lead">{t.cases.lead}</p>
+        </div>
+        <div class="cases">
+          {t.cases.items.map((c) => (
+            <div class="case reveal">
+              <img src={c.img} alt="" loading="lazy" width="1000" height="563" />
+              <div><h3>{c.t}</h3><p>{c.d}</p></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Подкаст -->
+    <section id="podcast" class="podcast">
+      <div class="wrap podcast-grid">
+        <div class="podcast-photo reveal">
+          <div class="polaroid">
+            <img class="clip" src="/img/clip.png" alt="" width="200" height="133" />
+            <img src="/img/guest.webp" alt="" loading="lazy" width="600" height="750" />
+            <div class="cap hand">{t.lang === 'ru' ? 'гость: Игорь Елфимов' : 'guest: Igor Elfimov'}</div>
+          </div>
+        </div>
+        <div class="reveal">
+          <div class="kicker">{t.podcast.kicker}</div>
+          <h2>{t.podcast.title}</h2>
+          <p class="lead">{t.podcast.lead}</p>
+          {episodes.length > 0 && (
+            <div class="eps">
+              {episodes.map((e) => (
+                <a class="ep" href={e.url} target="_blank" rel="noopener">
+                  <img src={e.thumb} alt="" loading="lazy" width="480" height="270" />
+                  <div><small>{fmt(e.date)}</small><b>{e.title}</b></div>
+                </a>
+              ))}
+            </div>
+          )}
+          <div class="podcast-cta">
+            <a class="btn btn-gold" href={LINKS.podcast} target="_blank" rel="noopener"><span class="arrow">{t.podcast.watch}</span></a>
+            <span class="note"><a href="#contact">{t.podcast.guest}</a></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Блог: лента канала -->
+    <section id="blog">
+      <div class="wrap">
+        <div class="sec-head row reveal">
+          <div>
+            <div class="kicker">{t.blog.kicker}</div>
+            <h2>{t.blog.title}</h2>
+            <p class="lead">{t.blog.lead}</p>
+          </div>
+          <a class="btn btn-ghost" href={LINKS.channel} target="_blank" rel="noopener"><span class="arrow">{t.blog.all}</span></a>
+        </div>
+        {posts.length > 0 ? (
+          <div class="posts">
+            {posts.map((x) => (
+              <a class="post reveal" href={x.url} target="_blank" rel="noopener">
+                {x.image && <img src={x.image} alt="" loading="lazy" referrerpolicy="no-referrer" />}
+                <div class="pb">
+                  <time datetime={x.date}>{fmt(x.date)}</time>
+                  <h3>{x.title}</h3>
+                  <p>{x.excerpt}</p>
+                  <span class="more arrow">{t.blog.read} </span>
+                </div>
+              </a>
+            ))}
+          </div>
+        ) : (
+          <div class="empty">{t.blog.empty} <a class="textlink" href={LINKS.channel}>t.me/put_chelovecheskiy</a></div>
+        )}
+      </div>
+    </section>
+
+    <!-- Обо мне -->
+    <section id="about" class="alt">
+      <div class="wrap about-grid">
+        <div class="about-photo reveal">
+          <div class="polaroid">
+            <img class="clip" src="/img/clip.png" alt="" width="200" height="133" />
+            <img src="/img/about.webp" alt={t.hero.photoAlt} loading="lazy" width="700" height="933" />
+            <div class="cap hand">{t.about.note}</div>
+          </div>
+        </div>
+        <div class="about-text reveal">
+          <div class="kicker">{t.about.kicker}</div>
+          <h2>{t.about.title}</h2>
+          <div style="margin-top:24px">{t.about.lead.map((x) => <p>{x}</p>)}</div>
+          <div class="timeline">
+            {t.about.timeline.map(([y, a, b]) => (
+              <div class="tl"><div class="y">{y}</div><b>{a}</b><span>{b}</span></div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Соцсети -->
+    <section>
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <div class="kicker">{t.socials.kicker}</div>
+          <h2>{t.socials.title}</h2>
+        </div>
+        <div class="socials">
+          {t.socials.items.map((s) => (
+            <a class="soc reveal" href={LINKS[s.key as keyof typeof LINKS]} target="_blank" rel="noopener">
+              <span class="ic" style={`background:${ICONS[s.key].color}`}>
+                <svg viewBox="0 0 24 24" aria-hidden="true" set:html={ICONS[s.key].svg} />
+              </span>
+              <span><b>{s.name}</b><span class="h">{s.handle}</span><small>{s.d}</small></span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="alt">
+      <div class="wrap">
+        <div class="sec-head reveal"><h2>{t.faq.title}</h2></div>
+        <div class="faq reveal">
+          {t.faq.items.map(([q, a]) => <details><summary>{q}</summary><p>{a}</p></details>)}
+        </div>
+      </div>
+    </section>
+
+    <!-- Заявка -->
+    <section id="contact" class="contact">
+      <div class="wrap contact-grid">
+        <div class="reveal">
+          <div class="kicker">{t.contact.kicker}</div>
+          <h2>{t.contact.title}</h2>
+          <p class="lead">{t.contact.lead}</p>
+          <div class="direct">
+            <span>{t.contact.direct}</span>
+            <a class="textlink" href={LINKS.dm} target="_blank" rel="noopener">t.me/poetsmirnov</a>
+          </div>
+        </div>
+        <form class="form reveal" id="lead" data-dm={LINKS.dm}
+          data-intro={t.contact.msgIntro} data-who={t.contact.msgWho} data-what={t.contact.msgWhat} data-copied={t.contact.copied}>
+          <span class="stamp">{t.contact.stamp}</span>
+          <div class="field">
+            <fieldset>
+              <legend>{t.contact.who}</legend>
+              <div class="chips">
+                {t.contact.whoOptions.map((o, i) => (
+                  <label><input type="radio" name="who" value={o} checked={i === 0} /><span>{o}</span></label>
+                ))}
+              </div>
+            </fieldset>
+          </div>
+          <div class="field">
+            <label for="what">{t.contact.what}</label>
+            <textarea id="what" name="what" rows="4" placeholder={t.contact.whatPh} required></textarea>
+          </div>
+          <div class="field">
+            <label for="name">{t.contact.name}</label>
+            <input id="name" name="name" type="text" placeholder={t.contact.namePh} autocomplete="given-name" />
+          </div>
+          <button class="btn btn-green" type="submit"><span class="arrow">{t.contact.submit}</span></button>
+          <p class="form-note" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>© {new Date().getFullYear()} {t.footer.rights} · {t.footer.line}</span>
+      <span>{t.footer.feeds} · <a href={t.altPath}>{t.altLabel}</a></span>
+    </div>
+  </footer>
+
+  <script>
+    const form = document.getElementById('lead') as HTMLFormElement | null;
+    form?.addEventListener('submit', (ev) => {
+      ev.preventDefault();
+      const d = form.dataset;
+      const fd = new FormData(form);
+      const name = String(fd.get('name') || '').trim();
+      const msg = [
+        d.intro + (name ? ` ${name}.` : ''),
+        `${d.who}: ${fd.get('who')}`,
+        `${d.what}: ${String(fd.get('what') || '').trim()}`,
+      ].join('\n');
+      const copy = navigator.clipboard?.writeText(msg);
+      window.open(d.dm, '_blank', 'noopener');
+      const note = form.querySelector('.form-note') as HTMLElement;
+      Promise.resolve(copy).then(() => { note.textContent = d.copied || ''; note.classList.add('ok'); })
+        .catch(() => { note.textContent = msg; });
+    });
+  </script>
+</Base>

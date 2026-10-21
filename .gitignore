@@ -1,16 +1,8 @@
-# build output
-dist/
-.astro/
-
-# deps
-node_modules/
-
-# env
-.env
-.env.production
-
-# macOS
+node_modules
+dist
+.astro
+.gstack
 .DS_Store
-
-# logs
-npm-debug.log*
+# локальные заметки — не в публичный репозиторий
+CLAUDE.md
+STATUS.md

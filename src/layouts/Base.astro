@@ -1,66 +1,55 @@
 ---
-import Nav from '../components/Nav.astro';
-import Footer from '../components/Footer.astro';
 import '../styles/global.css';
+import { LINKS } from '../data/content';
+import type { Dict } from '../data/content';
 
-interface Props {
-  title?: string;
-  description?: string;
-}
-
-const {
-  title = 'Никита Смирнов — AI-автоматизация, боты, инструменты',
-  description = 'Личный сайт Никиты Смирнова: витрина еженедельных деплоев, проекты по автоматизации, история и философия.',
-} = Astro.props;
+interface Props { t: Dict }
+const { t } = Astro.props;
+const site = Astro.site ?? new URL('https://nikita.your-way.online');
+const canonical = new URL(t.path, site).href;
+const alt = new URL(t.altPath, site).href;
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: t.lang === 'ru' ? 'Никита Смирнов' : 'Nikita Smirnov',
+  url: canonical,
+  image: new URL('/og.jpg', site).href,
+  jobTitle: t.lang === 'ru' ? 'Внедрение нейросетей и ИИ-агентов' : 'AI implementation consultant',
+  sameAs: [LINKS.channel, LINKS.instagram, LINKS.youtube, LINKS.podcast, LINKS.github],
+};
 ---
-
 <!doctype html>
-<html lang="ru">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
-    <meta name="description" content={description} />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <Nav />
-    <main>
-      <slot />
-    </main>
-    <Footer />
-
-    <script>
-      // мягкое появление секций при скролле.
-      // Уважаем prefers-reduced-motion: не прячем контент вовсе.
-      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const io = new IntersectionObserver(
-        (entries) => {
-          for (const e of entries) {
-            if (e.isIntersecting) {
-              (e.target as HTMLElement).style.opacity = '1';
-              (e.target as HTMLElement).style.transform = 'none';
-              io.unobserve(e.target);
-            }
-          }
-        },
-        { threshold: 0.08 }
-      );
-      document.querySelectorAll('[data-reveal]').forEach((el) => {
-        const h = el as HTMLElement;
-        if (reduce) return; // без анимации — контент виден сразу
-        h.style.opacity = '0';
-        h.style.transform = 'translateY(22px)';
-        h.style.transition = 'opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1)';
-        io.observe(h);
-      });
-    </script>
-  </body>
+<html lang={t.lang}>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{t.meta.title}</title>
+  <meta name="description" content={t.meta.description} />
+  <link rel="canonical" href={canonical} />
+  <link rel="alternate" hreflang={t.lang} href={canonical} />
+  <link rel="alternate" hreflang={t.lang === 'ru' ? 'en' : 'ru'} href={alt} />
+  <link rel="alternate" hreflang="x-default" href={new URL('/', site).href} />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={t.meta.title} />
+  <meta property="og:description" content={t.meta.description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={new URL('/og.jpg', site).href} />
+  <meta property="og:locale" content={t.locale} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#f4eedf" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Montserrat:wght@400;500;600;700;800;900&display=swap&subset=cyrillic" rel="stylesheet" />
+  <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+</head>
+<body>
+  <slot />
+  <script>
+    const io = new IntersectionObserver((es) => es.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    }), { rootMargin: '0px 0px -8% 0px' });
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+  </script>
+</body>
 </html>

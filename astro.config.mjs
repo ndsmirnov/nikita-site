@@ -1,8 +1,8 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 
-// Продакшн-URL заполним, когда подключим Netlify/домен.
+// Личный хостинг: сервер рег.ру + домен your-way.online (личный Cloudflare). Не Netlify — там рабочий аккаунт.
 export default defineConfig({
-  site: 'https://example.netlify.app',
+  site: 'https://nikita.your-way.online',
   trailingSlash: 'ignore',
 });
