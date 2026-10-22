@@ -1,0 +1,251 @@
+// Медиакит подкаста «Путь человеческий» — отдельная страница /podcast/ (RU) и /en/podcast/ (EN).
+// Цифры YouTube — vault «ПУТЬ ПОДКАСТ/Анализ канала YouTube (16.10.2026).md».
+// Елфимов: «продал продуктов на 200 000+ ₽ ученикам с подкаста» — слова Никиты 22.10.2026.
+
+const ru = {
+  meta: {
+    title: 'Медиакит подкаста «Путь человеческий» — Никита Смирнов',
+    description: 'Подкаст для предпринимателей и экспертов: выпуск, нарезки и публикация на всех площадках. Кейсы: продажи на 200 000+ ₽, 33 500 просмотров, гости — основатели брендов.',
+  },
+  back: 'На главную',
+  hero: {
+    kicker: 'Медиакит подкаста',
+    title: 'Ваша история\u00a0—',
+    accent: 'в формате, который продаёт',
+    lead: '«Путь человеческий» — подкаст Никиты Смирнова о людях, которые нашли своё дело. Гости — предприниматели, эксперты и основатели брендов. Выпуск работает на вас месяцами: в поиске, в нарезках и соцсетях.',
+    cta: 'Хочу на подкаст',
+    cta2: 'Смотреть кейсы',
+  },
+  stats: [
+    { n: 198, suf: ' тыс.', l: 'просмотров выпусков и нарезок' },
+    { n: 18, suf: '', l: 'полных выпусков' },
+    { n: 125, suf: '', l: 'нарезок в Shorts' },
+    { n: 11, suf: ' тыс.', l: 'часов просмотра' },
+  ],
+  cases: {
+    kicker: 'Кейсы',
+    title: 'Три причины прийти на подкаст',
+    lead: 'Деньги, охваты и авторитет — то, что получили наши гости. Переключайтесь между кейсами.',
+    items: [
+      {
+        key: 'elfimov',
+        hook: 'Деньги',
+        name: 'Игорь Елфимов',
+        role: 'Тренер по отношениям: 7 лет практики, больше 1 000 учеников',
+        headline: 'Ученики с подкаста купили на 200 000+ ₽',
+        img: '/img/pod/elfimov-ep2.webp',
+        funnelTitle: 'Как подкаст продаёт: воронка выпуска',
+        funnel: [
+          ['Запись в студии', 'Один день. Монтаж, обложка и нарезки — на нас'],
+          ['Полный выпуск на YouTube', '1 891 просмотр, досмотр 17,8 % — вдвое выше среднего по каналу'],
+          ['Нарезки в Shorts и Instagram', 'Сильные моменты разговора ведут зрителя к гостю'],
+          ['Заявки гостю', 'Люди пишут уже прогретыми: они час слушали его в разговоре'],
+          ['Продажи', '200 000+ ₽ — ученики с подкаста купили его продукты'],
+        ],
+        econ: [
+          ['1 день', 'записи'],
+          ['200 000+ ₽', 'продаж гостя'],
+          ['100+ ₽', 'продаж на каждый просмотр выпуска'],
+        ],
+        more: 'Второй выпуск с Игорем — «ИИ в пикапе» — вышел 21 октября 2026',
+        link: 'https://www.youtube.com/watch?v=izDm6FnXSYQ',
+      },
+      {
+        key: 'zimin',
+        hook: 'Охваты',
+        name: 'Станислав Зимин',
+        role: 'Тренд-аналитик Центра креативных индустрий МГУ, выставки в Париже, Токио, Гонконге и Мадриде',
+        headline: 'Два выпуска — 33 500 просмотров',
+        img: '/img/pod/zimin-1.webp',
+        facts: [
+          ['17 880', 'просмотров у первой части'],
+          ['15 657', 'у второй'],
+          ['+463', 'подписчика каналу'],
+          ['1 457', 'человек нашли выпуск по запросу «станислав зимин»'],
+          ['43-я минута', 'до неё досматривает половина зрителей'],
+          ['5 651', 'просмотр у одной нарезки в Shorts'],
+        ],
+        takeaway: 'Выпуск становится главной страницей гостя в поиске YouTube: людям интересно, кто он, — и они находят часовой разговор с ним.',
+        link: 'https://www.youtube.com/watch?v=0nSxTBsSD0A',
+      },
+      {
+        key: 'fedorov',
+        hook: 'Авторитет',
+        name: 'Виктор Фёдоров',
+        role: 'Предприниматель, основатель брендов на полках Азбуки Вкуса, ВкусВилла и Surf Coffee',
+        headline: 'Суд забрал компанию — он построил новую',
+        img: '/img/pod/fedorov.webp',
+        facts: [
+          ['8 класс', 'первый собственный магазин'],
+          ['2015', 'основал компанию'],
+          ['3 года', 'суда — и потеря компании'],
+          ['2022', 'начал заново и вернулся на полки'],
+        ],
+        takeaway: 'Подкаст ставит вас в один ряд с основателями известных брендов. Рядом с такими гостями растёт доверие и к вам.',
+        link: 'https://www.youtube.com/watch?v=cUrgbuGWz1Y',
+      },
+    ],
+    watch: 'Смотреть выпуск',
+  },
+  gets: {
+    kicker: 'Что получает гость',
+    title: 'Выпуск под ключ и 8 роликов для ваших соцсетей',
+    items: [
+      ['Предынтервью', 'Разбираем вашу историю и цель выпуска, вопросы готовим под неё'],
+      ['Студийная запись', 'Живой разговор без сценария и глянца — так ему верят'],
+      ['Монтаж и обложка', 'Полный выпуск в стиле подкаста, обложка под клики'],
+      ['8 вертикальных роликов', '7 нарезок и трейлер — готовы для ваших соцсетей'],
+      ['Публикация везде', 'YouTube, VK Видео, Rutube, Mave; нарезки — Shorts, Instagram, TikTok, ВК Клипы, Дзен'],
+      ['Пакет правок', 'Один раунд правок, чтобы вы были довольны выпуском'],
+    ],
+  },
+  who: {
+    kicker: 'Для кого',
+    title: 'Кого мы зовём в гости',
+    items: ['Предприниматели и основатели брендов', 'Эксперты с практикой и учениками', 'Люди с содержательной историей пути'],
+  },
+  steps: {
+    title: 'Как попасть на подкаст',
+    items: [
+      ['Заявка', 'Пара строк о себе — она сразу приходит Никите в Telegram'],
+      ['Созвон', 'Короткий разговор: ваша история, цель и условия'],
+      ['Предынтервью', 'Собираем вопросы под вашу задачу'],
+      ['Запись', 'Один день в студии'],
+      ['Выход', 'Выпуск, нарезки и публикация на всех площадках'],
+    ],
+  },
+  episodes: { kicker: 'Выпуски', title: 'Переговорная Конторки', all: 'Все выпуски на YouTube', mave: 'Слушать на Mave' },
+  cta: {
+    kicker: 'Заявка',
+    title: 'Расскажите свою историю',
+    lead: 'Оставьте заявку — заявка сразу придёт Никите в Telegram. Условия обсуждаем на коротком созвоне.',
+    whatLabel: 'О чём ваша история',
+    whatPh: 'Чем занимаетесь, что хотите рассказать и кому',
+  },
+};
+
+export type PodDict = typeof ru;
+
+const en: PodDict = {
+  meta: {
+    title: 'Podcast media kit “The Human Path” — Nikita Smirnov',
+    description: 'A podcast for founders and experts: full episode, clips and publishing everywhere. Cases: 200,000+ ₽ in sales, 33,500 views, guests who founded known brands.',
+  },
+  back: 'Home',
+  hero: {
+    kicker: 'Podcast media kit',
+    title: 'Your story\u00a0—',
+    accent: 'in a format that sells',
+    lead: '“The Human Path” is Nikita Smirnov’s podcast about people who found their calling. Guests are founders, experts and brand creators. An episode keeps working for you for months: in search, in clips and on social. The podcast is in Russian.',
+    cta: 'Be a guest',
+    cta2: 'See the cases',
+  },
+  stats: [
+    { n: 198, suf: 'K', l: 'views of episodes and clips' },
+    { n: 18, suf: '', l: 'full episodes' },
+    { n: 125, suf: '', l: 'Shorts clips' },
+    { n: 11, suf: 'K', l: 'hours watched' },
+  ],
+  cases: {
+    kicker: 'Cases',
+    title: 'Three reasons to come on the podcast',
+    lead: 'Money, reach and authority — what our guests got. Switch between the cases.',
+    items: [
+      {
+        key: 'elfimov',
+        hook: 'Money',
+        name: 'Igor Elfimov',
+        role: 'Relationship coach: 7 years of practice, over 1,000 students',
+        headline: 'Students from the podcast bought 200,000+ ₽',
+        img: '/img/pod/elfimov-ep2.webp',
+        funnelTitle: 'How a podcast sells: the episode funnel',
+        funnel: [
+          ['Studio recording', 'One day. Editing, cover and clips are on us'],
+          ['Full episode on YouTube', '1,891 views, 17.8% retention — twice the channel average'],
+          ['Clips on Shorts and Instagram', 'The strongest moments lead viewers to the guest'],
+          ['Leads for the guest', 'People reach out already warm: they’ve spent an hour listening to him'],
+          ['Sales', '200,000+ ₽ — students from the podcast bought his products'],
+        ],
+        econ: [
+          ['1 day', 'of recording'],
+          ['200,000+ ₽', 'guest sales'],
+          ['100+ ₽', 'in sales per episode view'],
+        ],
+        more: 'The second episode with Igor, “AI in dating”, came out on 21 October 2026',
+        link: 'https://www.youtube.com/watch?v=izDm6FnXSYQ',
+      },
+      {
+        key: 'zimin',
+        hook: 'Reach',
+        name: 'Stanislav Zimin',
+        role: 'Trend analyst at the Moscow State University Creative Industries Centre, exhibitions in Paris, Tokyo, Hong Kong and Madrid',
+        headline: 'Two episodes — 33,500 views',
+        img: '/img/pod/zimin-1.webp',
+        facts: [
+          ['17,880', 'views on part one'],
+          ['15,657', 'on part two'],
+          ['+463', 'channel subscribers'],
+          ['1,457', 'people found it by searching his name'],
+          ['43rd minute', 'half the viewers watch this far'],
+          ['5,651', 'views on a single Shorts clip'],
+        ],
+        takeaway: 'The episode becomes the guest’s main page in YouTube search: people look him up and find an hour-long conversation.',
+        link: 'https://www.youtube.com/watch?v=0nSxTBsSD0A',
+      },
+      {
+        key: 'fedorov',
+        hook: 'Authority',
+        name: 'Viktor Fedorov',
+        role: 'Entrepreneur, founder of brands sold at Azbuka Vkusa, VkusVill and Surf Coffee',
+        headline: 'A court took his company — he built a new one',
+        img: '/img/pod/fedorov.webp',
+        facts: [
+          ['8th grade', 'his first own shop'],
+          ['2015', 'founded a company'],
+          ['3 years', 'in court — and the company lost'],
+          ['2022', 'started over and got back on the shelves'],
+        ],
+        takeaway: 'The podcast puts you next to founders of known brands. Guests like these make people trust you more, too.',
+        link: 'https://www.youtube.com/watch?v=cUrgbuGWz1Y',
+      },
+    ],
+    watch: 'Watch the episode',
+  },
+  gets: {
+    kicker: 'What a guest gets',
+    title: 'A turnkey episode and 8 clips for your socials',
+    items: [
+      ['Pre-interview', 'We go through your story and goal, questions are built around it'],
+      ['Studio recording', 'A real conversation, no script or gloss — that’s why people trust it'],
+      ['Editing and cover', 'A full episode in the podcast style, a cover made for clicks'],
+      ['8 vertical clips', '7 clips and a trailer, ready for your socials'],
+      ['Published everywhere', 'YouTube, VK Video, Rutube, Mave; clips on Shorts, Instagram, TikTok, VK Clips, Dzen'],
+      ['A round of edits', 'One round of edits so you’re happy with the episode'],
+    ],
+  },
+  who: {
+    kicker: 'Who it’s for',
+    title: 'Who we invite',
+    items: ['Founders and brand creators', 'Experts with practice and students', 'People with a meaningful story'],
+  },
+  steps: {
+    title: 'How to get on the podcast',
+    items: [
+      ['Request', 'A couple of lines about you — it lands in Nikita’s Telegram right away'],
+      ['Call', 'A short talk: your story, goal and terms'],
+      ['Pre-interview', 'We build questions around your goal'],
+      ['Recording', 'One day in the studio'],
+      ['Release', 'Episode, clips and publishing everywhere'],
+    ],
+  },
+  episodes: { kicker: 'Episodes', title: 'The Office meeting room', all: 'All episodes on YouTube', mave: 'Listen on Mave' },
+  cta: {
+    kicker: 'Request',
+    title: 'Tell us your story',
+    lead: 'Leave a request — it goes straight to Nikita’s Telegram. Terms are discussed on a short call.',
+    whatLabel: 'What your story is about',
+    whatPh: 'What you do, what you want to share and with whom',
+  },
+};
+
+export const POD = { ru, en };

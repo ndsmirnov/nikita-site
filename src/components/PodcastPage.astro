@@ -1,0 +1,153 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import LeadForm from './LeadForm.astro';
+import { DICTS, LINKS, EPISODES } from '../data/content';
+import { POD } from '../data/podcast';
+
+interface Props { lang: 'ru' | 'en' }
+const t = DICTS[Astro.props.lang];
+const p = POD[Astro.props.lang];
+const covers = ['elfimov', 'zimin', 'zimin2', 'fedorov'];
+---
+<Base t={t} meta={p.meta} path={t.podPath} altPath={t.altPodPath} theme="dark" image="/img/pod/studio-guests.webp">
+  <Header t={t} page="podcast" />
+
+  <main class="pod-page">
+    <!-- A: внимание -->
+    <section class="ph-hero">
+      <div class="ph-bg" style="--img:url('/img/pod/studio-guests.webp')"></div>
+      <div class="wrap ph-hero-in">
+        <div class="kicker">{p.hero.kicker}</div>
+        <h1 class="split">
+          {p.hero.title.split(' ').map((w, i) => <span class="w"><span style={`--i:${i}`}>{w}</span></span>)}
+          <span class="accent">{p.hero.accent.split(' ').map((w, i) => <span class="w"><span style={`--i:${i + 3}`}>{w}</span></span>)}</span>
+        </h1>
+        <p class="lead">{p.hero.lead}</p>
+        <div class="hero-cta">
+          <a class="btn btn-gold magnet" href="#contact"><span class="arrow">{p.hero.cta}</span></a>
+          <a class="btn btn-ghost" href="#cases">{p.hero.cta2}</a>
+        </div>
+        <div class="eq big" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+    </section>
+
+    <div class="ph-stats">
+      <div class="wrap ph-stats-grid">
+        {p.stats.map((s) => (
+          <div class="reveal"><b><span class="count" data-to={s.n}>{s.n}</span>{s.suf}</b><span>{s.l}</span></div>
+        ))}
+      </div>
+    </div>
+
+    <!-- I: интерес — три кейса -->
+    <section id="cases" class="ph-cases">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <div class="kicker">{p.cases.kicker}</div>
+          <h2>{p.cases.title}</h2>
+          <p class="lead">{p.cases.lead}</p>
+        </div>
+        <div class="case-tabs reveal" role="tablist">
+          {p.cases.items.map((c, i) => (
+            <button type="button" role="tab" class={i === 0 ? 'on' : ''} aria-selected={i === 0 ? 'true' : 'false'} data-case={c.key}>
+              <span class="hook">{c.hook}</span><b>{c.name}</b>
+            </button>
+          ))}
+        </div>
+        {p.cases.items.map((c, i) => (
+          <article id={c.key} class={`case-panel${i === 0 ? ' on' : ''}`} data-case={c.key}>
+            <div class="cp-head">
+              <a class="cp-cover" href={c.link} target="_blank" rel="noopener">
+                <img src={c.img} alt={c.name} loading="lazy" width="1280" height="720" />
+                <span class="play" aria-hidden="true"></span>
+              </a>
+              <div>
+                <span class="hook">{c.hook}</span>
+                <h3>{c.headline}</h3>
+                <p class="role"><b>{c.name}</b> — {c.role}</p>
+                <a class="textlink" href={c.link} target="_blank" rel="noopener">{p.cases.watch} →</a>
+              </div>
+            </div>
+            {'funnel' in c && c.funnel && (
+              <div class="funnel">
+                <h4>{c.funnelTitle}</h4>
+                <ol>{c.funnel.map(([a, b], k) => <li style={`--k:${k}`}><b>{a}</b><span>{b}</span></li>)}</ol>
+                <div class="econ">{c.econ.map(([a, b]) => <div><b>{a}</b><span>{b}</span></div>)}</div>
+                <p class="more">{c.more}</p>
+              </div>
+            )}
+            {'facts' in c && c.facts && (
+              <div class="facts">
+                <div class="facts-grid">{c.facts.map(([a, b], k) => <div style={`--k:${k}`}><b>{a}</b><span>{b}</span></div>)}</div>
+                <p class="takeaway">{c.takeaway}</p>
+              </div>
+            )}
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- D: желание — что получает гость -->
+    <section class="ph-gets">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <div class="kicker">{p.gets.kicker}</div>
+          <h2>{p.gets.title}</h2>
+        </div>
+        <div class="gets-grid">
+          {p.gets.items.map(([a, b], i) => (
+            <div class="get reveal spot" style={`--d:${i * 70}ms`}><span class="n">0{i + 1}</span><b>{a}</b><span>{b}</span></div>
+          ))}
+        </div>
+        <div class="who reveal">
+          <div><div class="kicker">{p.who.kicker}</div><h3>{p.who.title}</h3></div>
+          <ul>{p.who.items.map((x) => <li>{x}</li>)}</ul>
+        </div>
+        <div class="steps dark reveal" data-steps>
+          <h3>{p.steps.title}</h3>
+          <ol class="five">{p.steps.items.map(([a, b], i) => <li style={`--i:${i}`}><b>{a}</b><span>{b}</span></li>)}</ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- Выпуски -->
+    <section class="ph-eps">
+      <div class="wrap">
+        <div class="sec-head row reveal">
+          <div><div class="kicker">{p.episodes.kicker}</div><h2>{p.episodes.title}</h2></div>
+          <div class="podcast-cta">
+            <a class="btn btn-ghost" href={LINKS.podcast} target="_blank" rel="noopener"><span class="arrow">{p.episodes.all}</span></a>
+            <a class="btn btn-ghost" href={LINKS.mave} target="_blank" rel="noopener">{p.episodes.mave}</a>
+          </div>
+        </div>
+        <div class="eps-grid">
+          {covers.map((k, i) => (
+            <a class="ep-cover reveal" href={EPISODES[k].url} target="_blank" rel="noopener" style={`--d:${i * 80}ms`}>
+              <img src={EPISODES[k].img} alt="" loading="lazy" width="1280" height="720" />
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- A: действие -->
+    <section id="contact" class="contact ph-contact">
+      <div class="wrap contact-grid">
+        <div class="reveal">
+          <div class="kicker">{p.cta.kicker}</div>
+          <h2>{p.cta.title}</h2>
+          <p class="lead">{p.cta.lead}</p>
+          <div class="direct">
+            <span>{t.contact.direct}</span>
+            <a class="textlink" href={LINKS.dm} target="_blank" rel="noopener">t.me/poetsmirnov</a>
+          </div>
+        </div>
+        <div class="reveal"><LeadForm t={t} preset={2} whatLabel={p.cta.whatLabel} whatPh={p.cta.whatPh} page="подкаст" /></div>
+      </div>
+    </section>
+  </main>
+
+  <Footer t={t} alt={t.altPodPath} />
+</Base>

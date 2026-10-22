@@ -1,0 +1,49 @@
+---
+// Форма заявки: POST в бота Конторки → сообщение Никите в Telegram.
+// Если отправка не удалась — копируем текст и открываем личку (запасной путь).
+import { LINKS, LEAD_URL } from '../data/content';
+import type { Dict } from '../data/content';
+interface Props { t: Dict; preset?: number; whatLabel?: string; whatPh?: string; page?: string }
+const { t, preset = 0, whatLabel = t.contact.what, whatPh = t.contact.whatPh, page = 'главная' } = Astro.props;
+const c = t.contact;
+---
+<form class="form lead-form" data-endpoint={LEAD_URL} data-dm={LINKS.dm} data-page={page}
+  data-intro={c.msgIntro} data-sending={c.sending} data-fail={c.fail} novalidate>
+  <span class="stamp crisp">{c.stamp}</span>
+  <div class="form-body">
+    <div class="field">
+      <fieldset>
+        <legend>{c.who}</legend>
+        <div class="chips">
+          {c.whoOptions.map((o, i) => (
+            <label><input type="radio" name="who" value={o} checked={i === preset} /><span>{o}</span></label>
+          ))}
+        </div>
+      </fieldset>
+    </div>
+    <div class="field">
+      <label for={`what-${page}`}>{whatLabel}</label>
+      <textarea id={`what-${page}`} name="what" rows="4" placeholder={whatPh} required minlength="3"></textarea>
+    </div>
+    <div class="field two">
+      <div>
+        <label for={`name-${page}`}>{c.name}</label>
+        <input id={`name-${page}`} name="name" type="text" placeholder={c.namePh} autocomplete="given-name" />
+      </div>
+      <div>
+        <label for={`contact-${page}`}>{c.contact} *</label>
+        <input id={`contact-${page}`} name="contact" type="text" placeholder={c.contactPh} required minlength="3" autocomplete="tel" />
+      </div>
+    </div>
+    <input class="hp" type="text" name="site" tabindex="-1" autocomplete="off" aria-hidden="true" />
+    <button class="btn btn-primary magnet" type="submit"><span class="arrow">{c.submit}</span></button>
+    <p class="form-note" aria-live="polite"></p>
+    <a class="btn btn-ghost form-fallback" href={LINKS.dm} target="_blank" rel="noopener" hidden>{c.failBtn}</a>
+  </div>
+  <div class="form-ok" hidden>
+    <div class="ok-mark" aria-hidden="true">✓</div>
+    <h3>{c.okTitle}</h3>
+    <p>{c.okText}</p>
+    <button class="btn btn-ghost btn-sm form-again" type="button">{c.again}</button>
+  </div>
+</form>

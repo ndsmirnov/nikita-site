@@ -1,0 +1,11 @@
+---
+import type { Dict } from '../data/content';
+interface Props { t: Dict; alt: string }
+const { t, alt } = Astro.props;
+---
+<footer>
+  <div class="wrap">
+    <span>© {new Date().getFullYear()} {t.footer.rights} · {t.footer.line}</span>
+    <span>{t.footer.feeds} · <a href={alt}>{t.altLabel}</a></span>
+  </div>
+</footer>

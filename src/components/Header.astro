@@ -1,0 +1,27 @@
+---
+import type { Dict } from '../data/content';
+interface Props { t: Dict; page?: 'home' | 'podcast' }
+const { t, page = 'home' } = Astro.props;
+const home = t.path;
+const h = (a: string) => (page === 'home' ? a : `${home}${a}`);
+const alt = page === 'home' ? t.altPath : t.altPodPath;
+---
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href={home} aria-label={t.nav.home}>
+      <span class="brand-mark">{t.lang === 'ru' ? 'НС' : 'NS'}</span>
+      <span class="brand-name">{t.lang === 'ru' ? 'Никита Смирнов' : 'Nikita Smirnov'}<small>{t.lang === 'ru' ? 'Конторка Никиты' : 'Nikita’s Office'}</small></span>
+    </a>
+    <nav class="nav-links" aria-label="menu">
+      <a href={h('#consult')}>{t.nav.consult}</a>
+      <a href={h('#tools')}>{t.nav.tools}</a>
+      <a href={h('#systems')}>{t.nav.systems}</a>
+      <a href={t.podPath} aria-current={page === 'podcast' ? 'page' : undefined}>{t.nav.podcast}</a>
+      <a href={h('#about')}>{t.nav.about}</a>
+    </nav>
+    <div class="nav-right">
+      <a class="lang" href={alt} hreflang={t.lang === 'ru' ? 'en' : 'ru'}>{t.altLabel}</a>
+      <a class="btn btn-primary btn-sm magnet" href="#contact">{t.nav.cta}</a>
+    </div>
+  </div>
+</header>

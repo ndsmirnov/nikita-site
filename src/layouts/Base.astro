@@ -3,40 +3,46 @@ import '../styles/global.css';
 import { LINKS } from '../data/content';
 import type { Dict } from '../data/content';
 
-interface Props { t: Dict }
-const { t } = Astro.props;
+interface Props {
+  t: Dict;
+  meta?: { title: string; description: string };
+  path?: string;
+  altPath?: string;
+  theme?: 'paper' | 'dark';
+  image?: string;
+}
+const { t, meta = t.meta, path = t.path, altPath = t.altPath, theme = 'paper', image = '/og.jpg' } = Astro.props;
 const site = Astro.site ?? new URL('https://nikita.your-way.online');
-const canonical = new URL(t.path, site).href;
-const alt = new URL(t.altPath, site).href;
+const canonical = new URL(path, site).href;
+const alt = new URL(altPath, site).href;
 const ld = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: t.lang === 'ru' ? 'Никита Смирнов' : 'Nikita Smirnov',
-  url: canonical,
+  url: new URL(t.path, site).href,
   image: new URL('/og.jpg', site).href,
   jobTitle: t.lang === 'ru' ? 'Внедрение нейросетей и ИИ-агентов' : 'AI implementation consultant',
   sameAs: [LINKS.channel, LINKS.instagram, LINKS.youtube, LINKS.podcast, LINKS.github],
 };
 ---
 <!doctype html>
-<html lang={t.lang}>
+<html lang={t.lang} class={theme === 'dark' ? 'theme-dark' : ''}>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{t.meta.title}</title>
-  <meta name="description" content={t.meta.description} />
+  <title>{meta.title}</title>
+  <meta name="description" content={meta.description} />
   <link rel="canonical" href={canonical} />
   <link rel="alternate" hreflang={t.lang} href={canonical} />
   <link rel="alternate" hreflang={t.lang === 'ru' ? 'en' : 'ru'} href={alt} />
-  <link rel="alternate" hreflang="x-default" href={new URL('/', site).href} />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content={t.meta.title} />
-  <meta property="og:description" content={t.meta.description} />
+  <meta property="og:title" content={meta.title} />
+  <meta property="og:description" content={meta.description} />
   <meta property="og:url" content={canonical} />
-  <meta property="og:image" content={new URL('/og.jpg', site).href} />
+  <meta property="og:image" content={new URL(image, site).href} />
   <meta property="og:locale" content={t.locale} />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="theme-color" content="#f4eedf" />
+  <meta name="theme-color" content={theme === 'dark' ? '#120d09' : '#f4eedf'} />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -46,10 +52,7 @@ const ld = {
 <body>
   <slot />
   <script>
-    const io = new IntersectionObserver((es) => es.forEach((e) => {
-      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-    }), { rootMargin: '0px 0px -8% 0px' });
-    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+    import '../scripts/fx';
   </script>
 </body>
 </html>
