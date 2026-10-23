@@ -9,7 +9,7 @@ import { POD } from '../data/podcast';
 interface Props { lang: 'ru' | 'en' }
 const t = DICTS[Astro.props.lang];
 const p = POD[Astro.props.lang];
-const covers = ['elfimov', 'zimin', 'zimin2', 'fedorov'];
+const covers = ['elfimov', 'barakovsky', 'zimin', 'zimin2', 'fedorov', 'elfimov2'];
 ---
 <Base t={t} meta={p.meta} path={t.podPath} altPath={t.altPodPath} theme="dark" image="/img/pod/studio-guests.webp">
   <Header t={t} page="podcast" />
@@ -49,6 +49,10 @@ const covers = ['elfimov', 'zimin', 'zimin2', 'fedorov'];
           <h2>{p.cases.title}</h2>
           <p class="lead">{p.cases.lead}</p>
         </div>
+        <div class="case-nav reveal">
+          <button type="button" class="case-arrow" data-dir="-1" aria-label="←">←</button>
+          <button type="button" class="case-arrow" data-dir="1" aria-label="→">→</button>
+        </div>
         <div class="case-tabs reveal" role="tablist">
           {p.cases.items.map((c, i) => (
             <button type="button" role="tab" class={i === 0 ? 'on' : ''} aria-selected={i === 0 ? 'true' : 'false'} data-case={c.key}>
@@ -56,6 +60,7 @@ const covers = ['elfimov', 'zimin', 'zimin2', 'fedorov'];
             </button>
           ))}
         </div>
+        <div class="case-track">
         {p.cases.items.map((c, i) => (
           <article id={c.key} class={`case-panel${i === 0 ? ' on' : ''}`} data-case={c.key}>
             <div class="cp-head">
@@ -68,6 +73,9 @@ const covers = ['elfimov', 'zimin', 'zimin2', 'fedorov'];
                 <h3>{c.headline}</h3>
                 <p class="role"><b>{c.name}</b> — {c.role}</p>
                 <a class="textlink" href={c.link} target="_blank" rel="noopener">{p.cases.watch} →</a>
+                {'brands' in c && c.brands && (
+                  <div class="cp-brands">{c.brands.map(([src, alt]) => <figure><img src={src} alt={alt} loading="lazy" /><figcaption>{alt}</figcaption></figure>)}</div>
+                )}
               </div>
             </div>
             {'funnel' in c && c.funnel && (
@@ -75,7 +83,10 @@ const covers = ['elfimov', 'zimin', 'zimin2', 'fedorov'];
                 <h4>{c.funnelTitle}</h4>
                 <ol>{c.funnel.map(([a, b], k) => <li style={`--k:${k}`}><b>{a}</b><span>{b}</span></li>)}</ol>
                 <div class="econ">{c.econ.map(([a, b]) => <div><b>{a}</b><span>{b}</span></div>)}</div>
-                <p class="more">{c.more}</p>
+                {'split' in c && c.split && (
+                  <div class="split"><h4>{c.splitTitle}</h4><div class="split-grid">{c.split.map(([a, b]) => <div><b>{a}</b><span>{b}</span></div>)}</div></div>
+                )}
+                {'more' in c && c.more && <p class="more">{c.more}</p>}
               </div>
             )}
             {'facts' in c && c.facts && (
@@ -86,6 +97,7 @@ const covers = ['elfimov', 'zimin', 'zimin2', 'fedorov'];
             )}
           </article>
         ))}
+        </div>
       </div>
     </section>
 

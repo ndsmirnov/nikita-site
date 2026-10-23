@@ -1,11 +1,12 @@
 // Медиакит подкаста «Путь человеческий» — отдельная страница /podcast/ (RU) и /en/podcast/ (EN).
 // Цифры YouTube — vault «ПУТЬ ПОДКАСТ/Анализ канала YouTube (16.10.2026).md».
-// Елфимов: «продал продуктов на 200 000+ ₽ ученикам с подкаста» — слова Никиты 22.10.2026.
+// Елфимов: «с первого выпуска купили на 300 000+ ₽» (3 × тренинг 50 000, курс 100 000+, личная работа) — голосовое Никиты 23.10.2026.
+// Бараковский: «встроил выпуск в воронку, люди пошли на тренинги» — голосовое Никиты 23.10.2026; цифр нет, не придумывать.
 
 const ru = {
   meta: {
     title: 'Медиакит подкаста «Путь человеческий» — Никита Смирнов',
-    description: 'Подкаст для предпринимателей и экспертов: выпуск, нарезки и публикация на всех площадках. Кейсы: продажи на 200 000+ ₽, 33 500 просмотров, гости — основатели брендов.',
+    description: 'Подкаст для предпринимателей и экспертов: выпуск, нарезки и публикация на всех площадках. Кейсы: продажи на 300 000+ ₽, выпуск в воронке гостя, 33 500 просмотров, гости — основатели брендов.',
   },
   back: 'На главную',
   hero: {
@@ -17,53 +18,80 @@ const ru = {
     cta2: 'Смотреть кейсы',
   },
   stats: [
-    { n: 198, suf: ' тыс.', l: 'просмотров выпусков и нарезок' },
+    { n: 198000, suf: '', l: 'просмотров выпусков и нарезок' },
     { n: 18, suf: '', l: 'полных выпусков' },
     { n: 125, suf: '', l: 'нарезок в Shorts' },
-    { n: 11, suf: ' тыс.', l: 'часов просмотра' },
+    { n: 11500, suf: '+', l: 'часов просмотра' },
   ],
   cases: {
     kicker: 'Кейсы',
-    title: 'Три причины прийти на подкаст',
-    lead: 'Деньги, охваты и авторитет — то, что получили наши гости. Переключайтесь между кейсами.',
+    title: 'Что получили гости',
+    lead: 'Деньги, воронка, охваты и авторитет. Листайте кейсы вправо.',
     items: [
       {
         key: 'elfimov',
         hook: 'Деньги',
         name: 'Игорь Елфимов',
-        role: 'Тренер по отношениям: 7 лет практики, больше 1 000 учеников',
-        headline: 'Ученики с подкаста купили на 200 000+ ₽',
-        img: '/img/pod/elfimov-ep2.webp',
+        role: 'Тренер по отношениям: 7 лет практики, больше 1 000 учеников',
+        headline: 'С первого выпуска купили на 300 000+ ₽',
+        img: '/img/pod/elfimov-ep1.webp',
         funnelTitle: 'Как подкаст продаёт: воронка выпуска',
         funnel: [
           ['Запись в студии', 'Один день. Монтаж, обложка и нарезки — на нас'],
-          ['Полный выпуск на YouTube', '1 891 просмотр, досмотр 17,8 % — вдвое выше среднего по каналу'],
+          ['Полный выпуск на YouTube', '1 891 просмотр, досмотр 17,8 % — вдвое выше среднего по каналу'],
           ['Нарезки в Shorts и Instagram', 'Сильные моменты разговора ведут зрителя к гостю'],
           ['Заявки гостю', 'Люди пишут уже прогретыми: они час слушали его в разговоре'],
-          ['Продажи', '200 000+ ₽ — ученики с подкаста купили его продукты'],
+          ['Продажи', '300 000+ ₽ — зрители выпуска купили его продукты'],
         ],
         econ: [
           ['1 день', 'записи'],
-          ['200 000+ ₽', 'продаж гостя'],
-          ['100+ ₽', 'продаж на каждый просмотр выпуска'],
+          ['300 000+ ₽', 'продаж гостя'],
+          ['больше года', 'выпуск работает на его воронку'],
+        ],
+        splitTitle: 'Кто купил',
+        split: [
+          ['3 человека', 'тренинг по 50 000 ₽'],
+          ['1 человек', 'курс за 100 000+ ₽'],
+          ['1 человек', 'личная работа — дороже курса'],
         ],
         more: 'Второй выпуск с Игорем — «ИИ в пикапе» — вышел 21 октября 2026',
-        link: 'https://www.youtube.com/watch?v=izDm6FnXSYQ',
+        link: 'https://www.youtube.com/watch?v=-BoCDrcCOkU',
+      },
+      {
+        key: 'barakovsky',
+        hook: 'Воронка',
+        name: 'Тимофей Бараковский',
+        role: 'Коуч по поиску предназначения, работал со звёздами Instagram',
+        headline: 'Встроил выпуск в воронку — люди пошли на тренинги',
+        img: '/img/pod/barakovsky.webp',
+        funnelTitle: 'Как выпуск стал частью воронки',
+        funnel: [
+          ['Запись в студии', 'Один день: разговор о его пути от геофизика до коуча'],
+          ['Выпуск в воронке', 'Тимофей отправляет выпуск тем, кто им интересуется'],
+          ['Прогрев', 'Час разговора отвечает на вопрос «почему ему можно доверять»'],
+          ['Тренинги', 'Люди приходят на его тренинги уже прогретыми'],
+        ],
+        econ: [
+          ['1 день', 'записи'],
+          ['1 выпуск', 'вместо серии прогревающих постов'],
+          ['тренинги', 'куда приходят зрители'],
+        ],
+        link: 'https://www.youtube.com/watch?v=XVEt_XGiX0k',
       },
       {
         key: 'zimin',
         hook: 'Охваты',
         name: 'Станислав Зимин',
         role: 'Тренд-аналитик Центра креативных индустрий МГУ, выставки в Париже, Токио, Гонконге и Мадриде',
-        headline: 'Два выпуска — 33 500 просмотров',
+        headline: 'Два выпуска — 33 500 просмотров',
         img: '/img/pod/zimin-1.webp',
         facts: [
-          ['17 880', 'просмотров у первой части'],
-          ['15 657', 'у второй'],
+          ['17 880', 'просмотров у первой части'],
+          ['15 657', 'у второй'],
           ['+463', 'подписчика каналу'],
-          ['1 457', 'человек нашли выпуск по запросу «станислав зимин»'],
+          ['1 457', 'человек нашли выпуск по запросу «станислав зимин»'],
           ['43-я минута', 'до неё досматривает половина зрителей'],
-          ['5 651', 'просмотр у одной нарезки в Shorts'],
+          ['5 651', 'просмотр у одной нарезки в Shorts'],
         ],
         takeaway: 'Выпуск становится главной страницей гостя в поиске YouTube: людям интересно, кто он, — и они находят часовой разговор с ним.',
         link: 'https://www.youtube.com/watch?v=0nSxTBsSD0A',
@@ -75,6 +103,7 @@ const ru = {
         role: 'Предприниматель, основатель брендов на полках Азбуки Вкуса, ВкусВилла и Surf Coffee',
         headline: 'Суд забрал компанию — он построил новую',
         img: '/img/pod/fedorov.webp',
+        brands: [['/img/pod/brand-rockit.webp', 'Батончик ROCK IT'], ['/img/pod/brand-cola.webp', 'Smart Cola']],
         facts: [
           ['8 класс', 'первый собственный магазин'],
           ['2015', 'основал компанию'],
@@ -129,7 +158,7 @@ export type PodDict = typeof ru;
 const en: PodDict = {
   meta: {
     title: 'Podcast media kit “The Human Path” — Nikita Smirnov',
-    description: 'A podcast for founders and experts: full episode, clips and publishing everywhere. Cases: 200,000+ ₽ in sales, 33,500 views, guests who founded known brands.',
+    description: 'A podcast for founders and experts: full episode, clips and publishing everywhere. Cases: 300,000+ ₽ in sales, an episode inside a guest’s funnel, 33,500 views, guests who founded known brands.',
   },
   back: 'Home',
   hero: {
@@ -141,38 +170,65 @@ const en: PodDict = {
     cta2: 'See the cases',
   },
   stats: [
-    { n: 198, suf: 'K', l: 'views of episodes and clips' },
+    { n: 198000, suf: '', l: 'views of episodes and clips' },
     { n: 18, suf: '', l: 'full episodes' },
     { n: 125, suf: '', l: 'Shorts clips' },
-    { n: 11, suf: 'K', l: 'hours watched' },
+    { n: 11500, suf: '+', l: 'hours watched' },
   ],
   cases: {
     kicker: 'Cases',
-    title: 'Three reasons to come on the podcast',
-    lead: 'Money, reach and authority — what our guests got. Switch between the cases.',
+    title: 'What guests got',
+    lead: 'Money, funnel, reach and authority. Swipe through the cases.',
     items: [
       {
         key: 'elfimov',
         hook: 'Money',
         name: 'Igor Elfimov',
         role: 'Relationship coach: 7 years of practice, over 1,000 students',
-        headline: 'Students from the podcast bought 200,000+ ₽',
-        img: '/img/pod/elfimov-ep2.webp',
+        headline: '300,000+ ₽ in sales from his first episode',
+        img: '/img/pod/elfimov-ep1.webp',
         funnelTitle: 'How a podcast sells: the episode funnel',
         funnel: [
           ['Studio recording', 'One day. Editing, cover and clips are on us'],
           ['Full episode on YouTube', '1,891 views, 17.8% retention — twice the channel average'],
           ['Clips on Shorts and Instagram', 'The strongest moments lead viewers to the guest'],
           ['Leads for the guest', 'People reach out already warm: they’ve spent an hour listening to him'],
-          ['Sales', '200,000+ ₽ — students from the podcast bought his products'],
+          ['Sales', '300,000+ ₽ — viewers of the episode bought his products'],
         ],
         econ: [
           ['1 day', 'of recording'],
-          ['200,000+ ₽', 'guest sales'],
-          ['100+ ₽', 'in sales per episode view'],
+          ['300,000+ ₽', 'guest sales'],
+          ['over a year', 'the episode has worked for his funnel'],
+        ],
+        splitTitle: 'Who bought',
+        split: [
+          ['3 people', 'a training at 50,000 ₽ each'],
+          ['1 person', 'a course for 100,000+ ₽'],
+          ['1 person', 'one-to-one work — pricier than the course'],
         ],
         more: 'The second episode with Igor, “AI in dating”, came out on 21 October 2026',
-        link: 'https://www.youtube.com/watch?v=izDm6FnXSYQ',
+        link: 'https://www.youtube.com/watch?v=-BoCDrcCOkU',
+      },
+      {
+        key: 'barakovsky',
+        hook: 'Funnel',
+        name: 'Timofey Barakovsky',
+        role: 'Purpose coach who has worked with Instagram stars',
+        headline: 'Built the episode into his funnel — people came to his trainings',
+        img: '/img/pod/barakovsky.webp',
+        funnelTitle: 'How the episode became part of the funnel',
+        funnel: [
+          ['Studio recording', 'One day: his path from geophysicist to coach'],
+          ['Episode in the funnel', 'Timofey sends the episode to people interested in him'],
+          ['Warm-up', 'An hour of conversation answers “why trust him”'],
+          ['Trainings', 'People come to his trainings already warm'],
+        ],
+        econ: [
+          ['1 day', 'of recording'],
+          ['1 episode', 'instead of a series of warm-up posts'],
+          ['trainings', 'where viewers end up'],
+        ],
+        link: 'https://www.youtube.com/watch?v=XVEt_XGiX0k',
       },
       {
         key: 'zimin',
@@ -199,6 +255,7 @@ const en: PodDict = {
         role: 'Entrepreneur, founder of brands sold at Azbuka Vkusa, VkusVill and Surf Coffee',
         headline: 'A court took his company — he built a new one',
         img: '/img/pod/fedorov.webp',
+        brands: [['/img/pod/brand-rockit.webp', 'ROCK IT bar'], ['/img/pod/brand-cola.webp', 'Smart Cola']],
         facts: [
           ['8th grade', 'his first own shop'],
           ['2015', 'founded a company'],

@@ -77,13 +77,19 @@ $$('[data-proof]').forEach((box) => {
     items.forEach((x, k) => { x.classList.toggle('on', k === i); x.setAttribute('aria-selected', String(k === i)); });
     shots.forEach((x, k) => {
       x.classList.toggle('on', k === i);
-      if (k === i) $$('.count', x).forEach((c) => count(c));
+      const v = x.querySelector('video');
+      if (k === i) {
+        $$('.count', x).forEach((c) => count(c));
+        if (v && !reduce) { v.preload = 'auto'; v.currentTime = 0; v.play().catch(() => {}); }
+      } else if (v) v.pause();
     });
   };
   const tick = () => { if (auto) show((cur + 1) % items.length); };
-  const start = () => { clearInterval(timer); if (auto) { box.classList.add('auto'); timer = window.setInterval(tick, 4500); } };
+  const start = () => { clearInterval(timer); if (auto) { box.classList.add('auto'); timer = window.setInterval(tick, 9000); } };
   items.forEach((x, k) => x.addEventListener('click', () => { auto = false; box.classList.remove('auto'); clearInterval(timer); show(k); }));
-  new IntersectionObserver((es) => es.forEach((e) => (e.isIntersecting ? start() : clearInterval(timer)))).observe(box);
+  new IntersectionObserver((es) => es.forEach((e) => {
+    if (e.isIntersecting) { start(); show(cur); } else { clearInterval(timer); $$('video', box).forEach((v) => v.pause()); }
+  })).observe(box);
 });
 
 // Было / стало
@@ -92,18 +98,32 @@ $$('.sys').forEach((card) => $$('.ba button', card).forEach((b) => b.addEventLis
   $$('.ba button', card).forEach((x) => x.classList.toggle('on', x === b));
 })));
 
-// Вкладки кейсов подкаста (+ переход по #elfimov / #zimin / #fedorov)
+// Кейсы подкаста: карусель вправо + вкладки + стрелки (+ переход по #elfimov / #zimin …)
 const tabs = $$('.case-tabs [data-case]');
-if (tabs.length) {
-  const panels = $$('.case-panel');
-  const pick = (key: string) => {
-    if (!panels.some((p) => p.dataset.case === key)) return;
-    tabs.forEach((x) => { const on = x.dataset.case === key; x.classList.toggle('on', on); x.setAttribute('aria-selected', String(on)); });
-    panels.forEach((p) => p.classList.toggle('on', p.dataset.case === key));
+const track = document.querySelector('.case-track') as HTMLElement | null;
+if (tabs.length && track) {
+  const panels = $$('.case-panel', track);
+  const arrows = $$<HTMLButtonElement>('.case-arrow');
+  let cur = 0;
+  const mark = (i: number) => {
+    cur = i;
+    tabs.forEach((x, k) => { x.classList.toggle('on', k === i); x.setAttribute('aria-selected', String(k === i)); });
+    panels.forEach((p, k) => p.classList.toggle('on', k === i));
+    arrows.forEach((b) => { b.disabled = (b.dataset.dir === '-1' && i === 0) || (b.dataset.dir === '1' && i === panels.length - 1); });
   };
-  tabs.forEach((x) => x.addEventListener('click', () => pick(x.dataset.case || '')));
+  const go = (i: number, smooth = true) => {
+    i = Math.max(0, Math.min(panels.length - 1, i));
+    track.scrollTo({ left: panels[i].offsetLeft - track.offsetLeft, behavior: smooth && !reduce ? 'smooth' : 'auto' });
+    mark(i);
+  };
+  tabs.forEach((x, k) => x.addEventListener('click', () => go(k)));
+  arrows.forEach((b) => b.addEventListener('click', () => go(cur + Number(b.dataset.dir))));
+  let t = 0;
+  track.addEventListener('scroll', () => { clearTimeout(t); t = window.setTimeout(() => mark(Math.round(track.scrollLeft / track.clientWidth)), 80); }, { passive: true });
+  mark(0);
   const h = location.hash.slice(1);
-  if (h) { pick(h); document.getElementById('cases')?.scrollIntoView(); }
+  const hi = panels.findIndex((p) => p.dataset.case === h);
+  if (hi >= 0) { go(hi, false); document.getElementById('cases')?.scrollIntoView(); }
 }
 
 // Форма заявки → бот Конторки → Telegram Никиты

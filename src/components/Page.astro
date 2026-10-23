@@ -81,12 +81,32 @@ const ICONS: Record<string, { color: string; svg: string }> = {
               <div class="win-body">
                 {t.proof.items.map((i, n) => (
                   <figure class={`win-shot${n === 0 ? ' on' : ''}`} data-i={n}>
-                    <img src={i.img} alt={i.t} loading="lazy" width="1200" height="750" />
-                    <figcaption><b class="count" data-to={i.stat}>{i.stat}</b>{i.plus ? '+' : ''}<span>{i.statLabel}</span></figcaption>
+                    <div class="win-media">
+                      {i.video
+                        ? <video src={i.video} poster={i.img} muted loop playsinline preload={n === 0 ? 'auto' : 'none'} aria-label={i.t}></video>
+                        : <img src={i.img} alt={i.t} loading="lazy" />}
+                      {i.demo && <span class="win-demo">{t.proof.demoNote}</span>}
+                    </div>
+                    <figcaption>
+                      <span class="fc-stat"><b class="count" data-to={i.stat}>{i.stat}</b>{i.plus ? '+' : ''}<span>{i.statLabel}</span></span>
+                      {i.logos && (
+                        <span class="plat" aria-label="Instagram, YouTube Shorts, Threads, TikTok">
+                          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/></svg>
+                          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4" fill="currentColor"/><path d="M10 9l5 3-5 3z" fill="#0f0d0b"/></svg>
+                          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.6 11.2c-.1 0-.2-.1-.3-.1-.2-2.9-1.8-4.6-4.4-4.6-1.6 0-2.9.7-3.7 1.9l1.4 1c.6-.9 1.5-1.1 2.3-1.1 1.6 0 2.4 1 2.6 2.3-.6-.1-1.3-.2-2-.2-2.3 0-3.9 1.2-3.9 3.1 0 1.8 1.5 3 3.4 3 2 0 3.3-1.2 3.8-3 .9.5 1.4 1.3 1.4 2.4 0 1.9-1.8 3.6-5.3 3.6-4 0-6-2.5-6-7.4s2-7.4 6-7.4c3.6 0 5.5 2 6.1 5.2l1.7-.4C19.3 4.9 16.8 2.5 12 2.5 6.9 2.5 4.3 5.9 4.3 12s2.6 9.5 7.7 9.5c4.4 0 7.1-2.3 7.1-5.4 0-2.3-1.1-3.9-2.5-4.9zm-4.4 4.2c-1 0-1.6-.5-1.6-1.2 0-.9.9-1.4 2.2-1.4.5 0 1 .1 1.4.1-.3 1.6-1 2.5-2 2.5z" fill="currentColor"/></svg>
+                          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.5 3c.4 2.2 1.8 3.6 4 3.8v3.1c-1.5 0-2.8-.4-4-1.2v6.1c0 3.4-2.6 5.7-5.7 5.7S5 18.2 5 15.1c0-3.3 2.8-5.9 6.4-5.5v3.2c-1.5-.4-3.2.6-3.2 2.3 0 1.3 1 2.4 2.5 2.4s2.6-1 2.6-2.8V3z" fill="currentColor"/></svg>
+                        </span>
+                      )}
+                      {i.banks && <span class="banks"><em>{t.proof.banksLabel}</em>{i.banks.map((b) => <span>{b}</span>)}</span>}
+                    </figcaption>
                   </figure>
                 ))}
               </div>
             </div>
+          </div>
+          <div class="proof-offer">
+            <div><b>{t.proof.offer.title}</b><p>{t.proof.offer.text}</p></div>
+            <a class="btn btn-primary magnet" href="#contact"><span class="arrow">{t.proof.offer.cta}</span></a>
           </div>
         </div>
       </div>
@@ -175,12 +195,14 @@ const ICONS: Record<string, { color: string; svg: string }> = {
             <h2>{t.cases.title}</h2>
             <p class="lead">{t.cases.lead}</p>
           </div>
-          <span class="sys-note">{t.cases.note}</span>
         </div>
         <div class="sys-grid">
           {t.cases.items.map((c) => (
             <article class="sys reveal" data-ba="after">
-              <div class="sys-shot"><img src={c.img} alt={c.t} loading="lazy" width="1200" height="750" /></div>
+              <div class={`sys-shot${c.img ? ' has-img' : ''}`}>
+                {c.img && <img src={c.img} alt={c.t} loading="lazy" />}
+                <div class="res-metric"><b>{c.metric}</b><span>{c.metricLabel}</span></div>
+              </div>
               <div class="sys-body">
                 <div class="sys-top">
                   <h3>{c.t}</h3>
